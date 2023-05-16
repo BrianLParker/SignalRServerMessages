@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using SignalRServerMessages.Server.Hubs;
 
 namespace SignalRServerMessages
 {
@@ -9,6 +10,12 @@ namespace SignalRServerMessages
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddSignalR();
+            builder.Services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
@@ -16,6 +23,8 @@ namespace SignalRServerMessages
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+            app.UseResponseCompression();
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseWebAssemblyDebugging();
@@ -38,6 +47,7 @@ namespace SignalRServerMessages
             app.MapRazorPages();
             app.MapControllers();
             app.MapFallbackToFile("index.html");
+            app.MapHub<ChatHub>("/chathub");
 
             app.Run();
         }
