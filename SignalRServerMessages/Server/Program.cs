@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using SignalRServerMessages.Server.Hubs;
+using SignalRServerMessages.Server.Services;
 
 namespace SignalRServerMessages
 {
@@ -16,6 +17,7 @@ namespace SignalRServerMessages
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
+            builder.Services.AddSingleton<ISomeService, SomeService>();
 
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

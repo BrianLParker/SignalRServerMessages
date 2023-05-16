@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SignalRServerMessages.Server.Services;
 using SignalRServerMessages.Shared;
 
 namespace SignalRServerMessages.Server.Controllers
@@ -9,12 +10,12 @@ namespace SignalRServerMessages.Server.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ISomeService someService, ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
